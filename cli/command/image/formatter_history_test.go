@@ -65,6 +65,20 @@ func TestHistoryContext_CreatedSince(t *testing.T) {
 		},
 		{
 			historyContext{
+				h:     image.HistoryResponseItem{Created: time.Date(1980, time.January, 1, 0, 0, 1, 0, time.UTC).Unix()},
+				trunc: false,
+				human: true,
+			}, "-", ctx.CreatedSince,
+		},
+		{
+			historyContext{
+				h:     image.HistoryResponseItem{Created: time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Unix()},
+				trunc: false,
+				human: true,
+			}, "-", ctx.CreatedSince,
+		},
+		{
+			historyContext{
 				h:     image.HistoryResponseItem{Created: time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC).Unix()},
 				trunc: false,
 				human: false,
