@@ -82,9 +82,14 @@ func (c *historyContext) CreatedAt() string {
 	return time.Unix(c.h.Created, 0).Format(time.RFC3339)
 }
 
+var time19800101 = time.Date(1980, time.January, 1, 0, 0, 1, 0, time.UTC).Unix()
+
 func (c *historyContext) CreatedSince() string {
 	if !c.human {
 		return c.CreatedAt()
+	}
+	if c.h.Created == 0 || c.h.Created == time19800101 {
+		return "-"
 	}
 	created := units.HumanDuration(time.Now().UTC().Sub(time.Unix(c.h.Created, 0)))
 	return created + " ago"
