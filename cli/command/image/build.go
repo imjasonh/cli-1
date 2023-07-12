@@ -98,9 +98,13 @@ func NewBuildCommand(dockerCli command.Cli) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "build [OPTIONS] PATH | URL | -",
 		Short: "Build an image from a Dockerfile",
-		Args:  cli.ExactArgs(1),
+		Args:  cli.RequiresMaxArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			options.context = args[0]
+			if len(args) == 0 {
+				options.context = "."
+			} else {
+				options.context = args[0]
+			}
 			return runBuild(dockerCli, options)
 		},
 		Annotations: map[string]string{
